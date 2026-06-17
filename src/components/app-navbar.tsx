@@ -12,15 +12,21 @@ import { Bell, Moon, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 import { SidebarTrigger, useSidebar } from "./ui/sidebar";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const User = "Tika Datta Gautam";
   const UserAvatar = User.split(" ").map((item, index) => (
     <div key={index}>{item.charAt(0)}</div>
   ));
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   return (
     <div className="">
       <nav
@@ -32,20 +38,23 @@ export default function Navbar() {
       >
         <SidebarTrigger />
         <div className="flex justify-end items-center flex-1 gap-2">
-          <Button
-            variant={"ghost"}
-            size={"icon"}
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            {theme === "dark" ? <Sun /> : <Moon />}
-          </Button>
-          <Button variant={"ghost"}>
+          {mounted && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="border-gray-500"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              {theme === "dark" ? <Sun /> : <Moon />}
+            </Button>
+          )}
+          <Button variant={"ghost"} className="border-gray-500">
             <Bell />
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="h-12 border-2 border-black">
-                <span className="flex border p-2 rounded-lg bg-black text-white">
+              <Button variant="outline" className="h-12 border-2 ">
+                <span className="flex border p-2 rounded-lg bg-gray-800 text-white">
                   {UserAvatar}
                 </span>{" "}
                 {User}

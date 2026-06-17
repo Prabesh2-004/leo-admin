@@ -30,6 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning={true}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
@@ -39,7 +40,7 @@ export default function RootLayout({
               <AppSidebar />
               <main className="flex-1 flex flex-col">
                 <Navbar />
-                {children}
+                <div className="pt-16">{children}</div>
               </main>
             </SidebarProvider>
           </TooltipProvider>
