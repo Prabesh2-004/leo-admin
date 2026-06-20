@@ -1,7 +1,8 @@
-export default function Home() {
+export default async function Home() {
+  
   return (
     <div>
-      <p className="text-2xl font-bold">Hello</p>
+      Home
     </div>
   );
 }

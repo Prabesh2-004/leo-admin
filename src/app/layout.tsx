@@ -6,6 +6,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import Navbar from "@/components/app-navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { createClient } from "@/lib/supabase/server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,11 +23,13 @@ export const metadata: Metadata = {
   description: "Leo Club of Atalindrabati",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
   return (
     <html
       lang="en"
@@ -37,9 +40,9 @@ export default function RootLayout({
         <ThemeProvider>
           <TooltipProvider>
             <SidebarProvider>
-              <AppSidebar />
+              {user && <AppSidebar />}
               <main className="flex-1 flex flex-col">
-                <Navbar />
+                {user && <Navbar />}
                 <div className="pt-16">{children}</div>
               </main>
             </SidebarProvider>
