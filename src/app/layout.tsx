@@ -42,7 +42,7 @@ export default async function RootLayout({
             <SidebarProvider>
               {user && <AppSidebar />}
               <main className="flex-1 flex flex-col">
-                {user && <Navbar />}
+                {user && <Navbar userInfo={user} />}
                 <div className="pt-16">{children}</div>
               </main>
             </SidebarProvider>
